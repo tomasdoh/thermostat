@@ -3,8 +3,9 @@
 function Thermostat() {
   this.temperature = 20;
   this.MINIMUMTEMP = 10;
+  this.MAXIMUMTEMP = 32;
   this.POWERSAVEMAXIMUMTEMP = 25;
-  this.powerSaving = false;
+  this.powerSaving = true;
 };
 
 Thermostat.prototype.currentTemperature = function() {
@@ -12,7 +13,9 @@ Thermostat.prototype.currentTemperature = function() {
 };
 
 Thermostat.prototype.temperatureUp = function() {
-  if (this.powerSaving === true && this.temperature <= this.POWERSAVEMAXIMUMTEMP)
+  if (this.powerSaving == true && this.temperature === this.POWERSAVEMAXIMUMTEMP)
+    { throw new Error ('maximum temp exceeded');
+  } else if (this.powerSaving == false && this.temperature === this.MAXIMUMTEMP)
     { throw new Error ('maximum temp exceeded');
   } else {
     this.temperature += 1;
@@ -20,7 +23,7 @@ Thermostat.prototype.temperatureUp = function() {
 };
 
 Thermostat.prototype.temperatureDown = function() {
-  if (this.temperature <= this.MINIMUMTEMP)
+  if (this.temperature === this.MINIMUMTEMP)
     { throw new Error ('minimum temp exceeded');
   } else {
     this.temperature -= 1;
