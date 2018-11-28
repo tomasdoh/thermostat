@@ -43,21 +43,54 @@ describe('Thermostat', function() {
     expect(thermostat.powerSaving).toBe(false);
   });
 
+// You can reset the temperature to 20 with a reset function
+  it('can reset to the default temperature', function() {
+    thermostat.temperatureUp()
+    thermostat.reset();
+    expect(thermostat.temperature).toEqual(20);
+  });
+
+// You can ask about the thermostat's current energy usage: < 18 is low-usage, < 25 is medium-usage, anything else is high-usage.
+  describe('when the energy usage is low', function() {
+
+    it('returns the current energy usage', function() {
+      thermostat.temperature = 17
+      expect(thermostat.currentEnergyUsage()).toEqual('low-usage');
+    });
+  });
+
+  describe('when the energy usage is medium', function() {
+
+    it('returns the current energy usage when medium', function() {
+      expect(thermostat.currentEnergyUsage()).toEqual('medium-usage');
+    });
+  });
+
+  describe('when the energy usage is high', function() {
+
+    it('returns the current energy usage', function() {
+      thermostat.temperature = 25
+      expect(thermostat.currentEnergyUsage()).toEqual('high-usage');
+    });
+  });
+
   describe('when power saving is on:', function() {
 
     it('has a maximum temperature of 25 degrees', function(){
       thermostat.powerSavingOn()
-      thermostat.temperature = 25
+      thermostat.temperature = 25;
       expect(function(){ thermostat.temperatureUp(); }).toThrowError('maximum temp exceeded');
     });
   });
 
+// If power saving mode is off, the maximum temperature is 32 degrees
   describe('when power saving is off:', function() {
 
     it('has a maximum temperature of 32 degrees', function(){
       thermostat.powerSavingOff()
-      thermostat.temperature = 32
+      thermostat.temperature = 32;
       expect(function(){ thermostat.temperatureUp(); }).toThrowError('maximum temp exceeded');
     });
   });
+
 });

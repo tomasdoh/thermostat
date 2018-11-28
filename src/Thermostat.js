@@ -19,7 +19,7 @@ Thermostat.prototype.temperatureUp = function() {
     { throw new Error ('maximum temp exceeded');
   } else {
     this.temperature += 1;
-  }
+  };
 };
 
 Thermostat.prototype.temperatureDown = function() {
@@ -27,7 +27,7 @@ Thermostat.prototype.temperatureDown = function() {
     { throw new Error ('minimum temp exceeded');
   } else {
     this.temperature -= 1;
-  }
+  };
 };
 
 Thermostat.prototype.powerSavingOn = function() {
@@ -36,4 +36,18 @@ Thermostat.prototype.powerSavingOn = function() {
 
 Thermostat.prototype.powerSavingOff = function() {
   this.powerSaving = false;
+};
+
+Thermostat.prototype.reset = function() {
+  this.temperature = 20;
+};
+
+Thermostat.prototype.currentEnergyUsage = function() {
+  if (this.temperature < 18) {
+    return 'low-usage';
+  } else if (this.temperature > 24) {
+    return 'high-usage';
+  } else {
+    return 'medium-usage';
+  };
 };
